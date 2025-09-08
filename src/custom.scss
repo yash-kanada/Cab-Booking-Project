@@ -1,0 +1,182 @@
+// 1. Override Bootstrap variables
+$primary: #009688;
+$primary-hover: #26a69a;
+$body-bg: #ffffff;
+$body-color: #212121;
+$card-bg: #f1f5f9;
+$navbar-bg: #009688;
+$navbar-color: #ffffff;
+$border-radius: 0.5rem;
+$font-family-base: 'Nunito', sans-serif;
+
+// 2. Import Bootstrap with overridden variables
+@import "bootstrap/scss/bootstrap";
+
+// 3. Custom Classes (Optional)
+.navbar-custom {
+  background-color: $primary;
+  padding: 0.5rem 1.5rem;
+  transition: color 0.3s ease;
+
+  .navbar-brand,
+  .nav-link {
+    color: $navbar-color !important;
+  }
+}
+
+.navbar-custom .nav-link:hover {
+  color: lighten($navbar-color, 10%) !important;
+}
+
+
+.footer {
+  background-color: $primary;
+}
+
+.btn-custom {
+  background-color: $primary ;
+  color: white;
+  border: none;
+
+  &:hover {
+    background-color: $primary-hover;
+    color: #ffffff;
+  }
+
+  &:disabled,
+  &.disabled {
+    background-color: $primary;
+    color: #e0e0e0;
+    cursor: not-allowed;
+
+  }
+}
+
+.btn-outline-custom {
+  background-color: transparent;
+  color: $primary;
+  border: 1px solid $primary;
+  border-radius: $border-radius;
+
+
+  &:hover {
+    background-color: $primary;
+    color: #fff;
+  }
+
+  &:disabled,
+  &.disabled {
+    background-color: transparent;
+    color: $primary;
+    border-color: $primary;
+    cursor: not-allowed;
+  }
+}
+
+
+.card-custom {
+  background-color: $card-bg;
+  border-radius: $border-radius;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+  border: none;
+  transition: box-shadow 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.3);
+  }
+}
+
+input.form-control {
+  border-radius: $border-radius;
+  box-shadow: none;
+
+  &:focus {
+    border-color: $primary;
+    box-shadow: 0 0 0 0.2rem rgba(0, 150, 136, 0.25);
+  }
+}
+
+.li-custom {
+  .dropdown-item:hover {
+    color: $primary ;
+    background-color: white;
+
+    // color: $body-bg ;
+    // background-color: $primary ;
+  }
+}
+
+.li1-custom {
+  // .dropdown-item {
+  //   color: red;
+  // }
+
+  .dropdown-item:hover {
+    // background-color: red;
+    color: red;
+  }
+}
+
+// Table styling
+.table-custom {
+  width: 100%;
+  border-collapse: collapse;
+
+  thead {
+    background-color: $primary ;
+    color: white;
+
+    th {
+      padding: 0.75rem 1rem;
+      text-align: center;
+      vertical-align: middle;
+      border: none;
+      letter-spacing: 0.5px;
+      // border-right: 1px solid $primary;
+    }
+  }
+
+  tbody {
+    tr {
+      transition: background-color 0.2s ease;
+
+      &:hover {
+         background-color: #f1f1f1;
+      }
+
+      td {
+        padding: 0.65rem 1rem;
+        vertical-align: middle;
+        text-align: center;
+        // border-top: 1px solid #dee2e6;
+      }
+    }
+  }
+
+  // Optional: Round corners
+  border-radius: 0.5rem;
+  // overflow: hidden;
+}
+
+.sidebar {
+  .nav-item {
+    .nav-link {
+      color: $body-bg;
+    }
+
+    &:hover {
+      .nav-link {
+        color: $primary-hover;
+      }
+    }
+    // &:hover {
+    //   background-color: $body-bg;
+
+    //   .nav-link {
+    //     color: $primary-hover;
+    //   }
+    // }
+  }
+}
+
+
