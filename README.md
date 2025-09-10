@@ -84,8 +84,5 @@ Cab-Booking-Project/
 ---
 
 ## ⚠️ Note
-
-```yaml
 The backend (back/ folder) was provided by the company during internship.
 This repository mainly highlights the frontend implementation I developed.
-```
