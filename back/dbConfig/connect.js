@@ -1,9 +1,10 @@
 const mongoose = require("mongoose");
 const colors = require("colors");
 
+
 const connect = () => {
   mongoose
-    .connect("mongodb+srv://sparkstoideasdev12:cab@cluster0.5jrv3mz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+    .connect(process.env.MONGO_URL)
     .then(() => {
       console.log("DB Connect successfully".bgWhite.cyan);
     })

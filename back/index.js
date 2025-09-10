@@ -1,3 +1,4 @@
+require("dotenv").config();
 const connect = require("./dbConfig/connect");
 connect();
 const PORT = 4040;
@@ -14,7 +15,6 @@ const fs = require("fs");
 const http = require("http");
 const colors = require("colors");
 
-require("dotenv").config();
 
 
 //Get Home
