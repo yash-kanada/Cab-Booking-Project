@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../Header';
 import Footer from '../Footer';
@@ -7,19 +7,34 @@ import { toast } from 'react-toastify';
 
 function U_Login() {
     const navigate = useNavigate();
+    const [data, setData] = useState()
     const [phno, setPhno] = useState('');
     const [password, setPassword] = useState('');
+
+    useEffect(() => {
+        if(data){
+            if(data.success === 1){
+                localStorage.setItem("session_uid", JSON.stringify(data.Id))
+            }else{
+                toast.error(data.message)
+            }
+        }
+    }, [data])
+
 
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
             const res = await axios.post("http://localhost:4040/user/login", { phno, password })
             console.log("res:", res)
-            if (res.data.success === 1) {
+            if (res.data?.success === 1) {
                 navigate("/")
                 toast.success(res.data.message)
+                setData(res.data)
+            }else{
+                toast.error(res.data.message)
             }
-        } catch(error) {
+        } catch (error) {
             toast.error(error.message)
         }
     };

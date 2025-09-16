@@ -1,5 +1,7 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 function A_Register() {
 
@@ -10,11 +12,23 @@ function A_Register() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleRegister = (e) => {
+    const handleRegister = async(e) => {
         e.preventDefault();
-        console.log('Registered details:', { firstName, lastName, email, password });
-        // Add your registration logic here (API call etc.)
-    };
+        const data = {firstName, lastName, email, password}
+        console.log('Registered details:', data);
+        try{
+            const res = await axios.post("http://localhost:4040/admin/signup",data)
+            console.log(res.data)
+            if(res.data?.success === 1){
+                navigate("/a-login")
+                toast.success(res.data.message,{autoClose:1200})
+            }else{
+                toast.error(res.data.message)
+            }
+        }catch(error){
+            toast.error(error.message)
+        }
+    };  
 
     return (
         <div

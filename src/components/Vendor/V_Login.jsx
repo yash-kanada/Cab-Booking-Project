@@ -1,16 +1,40 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../Header';
 import Footer from '../Footer';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 function V_Login() {
     const navigate = useNavigate();
-    const [mobile, setMobile] = useState('');
+    const [data, setData] = useState("")
+    const [phno, setPhno] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleLogin = (e) => {
+    useEffect(() => {
+        if(data.success === 1){
+            localStorage.setItem("session_vid", JSON.stringify(data.Id))
+        }else{
+            toast.error(data.message)
+        }
+    }, [data])
+
+
+    const handleLogin = async (e) => {
         e.preventDefault();
-        // login logic here
+        try {
+            const res = await axios.post("http://localhost:4040/vender/login", {phno, password})
+            console.log("Vendor login:", res)
+            if (res.data?.success === 1) {
+                setData(res.data)
+                navigate("/")
+                toast.success(res.data.message)
+            } else {
+                toast.error(res.data.message)
+            }
+        } catch (error) {
+            toast.error(error.message)
+        }
     };
 
     return (
@@ -31,8 +55,8 @@ function V_Login() {
                             <input
                                 type="tel"
                                 className="form-control"
-                                value={mobile}
-                                onChange={(e) => setMobile(e.target.value)}
+                                value={phno}
+                                onChange={(e) => setPhno(e.target.value)}
                                 required
                             />
                         </div>

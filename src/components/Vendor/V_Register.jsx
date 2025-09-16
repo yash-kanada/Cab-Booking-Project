@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import Header from '../Header';
 import Footer from '../Footer';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import axios from 'axios';
 
 function V_Register() {
 
@@ -11,7 +13,7 @@ function V_Register() {
         firstName: '',
         lastName: '',
         email: '',
-        mobile: '',
+        phno: '',
         password: '',
         confirmPassword: ''
     });
@@ -23,10 +25,26 @@ function V_Register() {
         }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // You can add validations and API call here
         console.log(formData);
+        if (formData.password === formData.confirmPassword) {
+            try {
+                const res = await axios.post("http://localhost:4040/vender/register", formData)
+                console.log("Vendor Register : ", res)
+                if (res.data?.success === 1) {
+                    navigate("/v-login")
+                    toast.success(res.data.message)
+                } else {
+                    toast.error(res.data.message)
+                }
+            } catch (error) {
+                toast.error(error.message)
+            }
+        } else {
+            toast.error("Password & Confirm Password doesn't match")
+            setFormData({ ...formData, password: "", confirmPassword: "" })
+        }
     };
 
     return (
@@ -62,7 +80,7 @@ function V_Register() {
 
                                     <div className="mb-3">
                                         <label className="form-label fw-semibold">Mobile Number</label>
-                                        <input type="tel" name="mobile" value={formData.mobile} onChange={handleChange} className="form-control" required />
+                                        <input type="tel" name="phno" value={formData.phno} onChange={handleChange} className="form-control" required />
                                     </div>
 
                                     <div className="mb-3">
@@ -80,10 +98,10 @@ function V_Register() {
                                     </div>
                                     <div className="text-sm font-semibold text-center">
                                         Already have an account?
-                                        <span className="text-primary crsptr" onClick={()=>navigate('/v-login')} > {" "} Login</span>
+                                        <span className="text-primary crsptr" onClick={() => navigate('/v-login')} > {" "} Login</span>
                                     </div>
                                 </form>
-                            </div>  
+                            </div>
                         </div>
                     </div>
                 </div>

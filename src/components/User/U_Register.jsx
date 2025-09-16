@@ -29,17 +29,24 @@ function U_Register() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         console.log(formData);
-        try {
-            const res = await axios.post("http://localhost:4040/user/register", formData)
-            console.log("res:", res)
-            if (res.data.success === 1) {
-                navigate('/u-login')
-                toast.success(res.data.message)
-            } else {
-                toast.error(res.data.message)
+        if (formData.password === formData.confirmpassword) {
+            try {
+                const res = await axios.post("http://localhost:4040/user/register", formData)
+                console.log("res:", res)
+                if (res.data?.success === 1) {
+                    navigate('/u-login')
+                    toast.success(res.data.message)
+                } else {
+                    toast.error(res.data.message)
+                }
+            } catch (error) {
+                toast.error(error.message)
             }
-        } catch (error) {
-            toast.error(error.message)
+        } else {
+            toast.error("Password & Confirm Password doesn't match", { autoClose: 1500 })
+            setTimeout(() => {
+                window.location.reload()
+            }, 1500);
         }
     };
 
